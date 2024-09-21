@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable Sidebar</title>
+  <link rel="stylesheet" href="styles.css">
+
+    <style>
+
+
+/* Basic Reset for Padding and Margins */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;              /* Flexbox to align sidebar and content */
+}
+
+#sidebar {
+  width: 240px;               /* Initial width of the sidebar */
+  height: 100vh;              /* Full height (viewport height) */
+  background-color: white;     /* Sidebar background color */
+  color: black;
+  /* padding: 20px; */
+
+  transition: width 0.2s;     /* Smooth transition when resizing */
+}
+
+
+#sidebar h2 {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+#sidebar ul {
+  list-style-type: none;      /* Remove bullets */
+}
+
+#sidebar ul li {  
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 20px;
+  margin-bottom: 3px;
+  
+
+}
+
+#sidebar ul li a {
+  color: black  ;
+  text-decoration: none;
+}
+
+/* Resizer Styles */
+#resizer {
+  width: 5px;                 /* Resizer handle width */
+  background-color: white;      /* Color of the resizer */
+  height: 100vh;
+  
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+
+}
+
+
+
+#main-content {
+  flex-grow: 1;               /* Let the main content take up the remaining space */
+  padding: 20px;
+}
+
+    </style>
+
+</head>
+<body>
+  <!-- Sidebar Section -->
+  <div id="sidebar">
+    <h2>Sidebar Menu</h2>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="notes.html">My Notes</a></li>
+      <li><a href="code.html">Code</a></li>
+    </ul>
+
+    <button>✖️</button>
+  </div>
+
+  <!-- Resizable Handle -->
+  <div id="resizer"></div>
+
+  <!-- Main Content Section -->
+  <div id="main-content">
+    <h1>Welcome to the Main Content</h1>
+    <p>This is where your main content will go. You can resize the sidebar!</p>
+  </div>
+
+  <script>
+
+
+const resizer = document.getElementById('resizer');
+const sidebar = document.getElementById('sidebar');
+
+// let isResizing = false;
+
+// resizer.addEventListener('mousedown', function (e) {
+//   isResizing = true;
+// });
+
+// document.addEventListener('mousemove', function (e) {
+//   if (!isResizing) return;
+//   // Calculate new width for the sidebar
+//   const newWidth = e.clientX;
+  
+//   // Set a min width and max width for the sidebar
+//   if (newWidth > 180 && newWidth < 300) { // Adjust these values as needed
+//     sidebar.style.width = newWidth + 'px';
+//   }
+// });
+
+// document.addEventListener('mouseup', function () {
+//   isResizing = false;  // Stop resizing when mouse button is released
+// });
+
+
+  </script>
+</body>
+</html>
