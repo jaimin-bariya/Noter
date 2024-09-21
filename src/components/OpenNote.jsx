@@ -1,9 +1,12 @@
 import ClearIcon from "/imgs/Menu/broom.png";
 import SaveIcon from "/imgs/Menu/safe-box.gif";
 import { isValidElement, useEffect, useState } from "react";
+import { jsPDF } from 'jspdf'
 
 const OpenNote = ({ note, setAllNotes }) => {
   const [currentNote, setCurrentNote] = useState(note.content);
+
+
 
   const handleTextAreaChanges = (event) => {
     const updatedContent = event.target.value;
@@ -18,16 +21,20 @@ const OpenNote = ({ note, setAllNotes }) => {
     }
   };
 
-  // Effect to handle setting currentNote when the note changes
+
+
+
   useEffect(() => {
     if (note && note.content !== undefined) {
       setCurrentNote(note.content);
     } else {
-      setCurrentNote(""); // Set to empty string if no note or content is undefined
+      setCurrentNote("");
     }
   }, [note]);
 
-  // Effect to save updated note to localStorage
+
+
+
   useEffect(() => {
     // console.log("change in current node");
 
@@ -46,22 +53,48 @@ const OpenNote = ({ note, setAllNotes }) => {
     }
   }, [currentNote, note]);
 
-  // const saveThisNote = (note) => {
-  //   setAllNotes(prevnotes => [{id: Date, content:note}, ...prevnotes])
-  // }
+
+
 
   const CleanMyNote = () => {
     setCurrentNote("");
   };
 
+
+  // const handleSave = () => {
+  //   const doc = new jsPDF();
+  //   doc.text(currentNote, 10, 10); 
+  //   doc.save('document.pdf'); 
+  // };
+
+  const handleSave = () => {
+    const doc = new jsPDF();
+    const margin = 10; // Margin from the edges
+    const pageWidth = doc.internal.pageSize.getWidth() - margin * 2;
+
+    // Split text into paragraphs based on double newlines
+    const paragraphs = content.split('\n\n'); // Split by two newlines
+    let cursorY = margin; // Initial Y position
+
+    paragraphs.forEach((paragraph) => {
+      // Split each paragraph into lines that fit within the page width
+      const splitText = doc.splitTextToSize(paragraph, pageWidth);
+
+      // Add each line of the paragraph to the PDF
+      splitText.forEach((line) => {
+        doc.text(line, margin, cursorY);
+        cursorY += 7; // Line height
+      });
+
+      // Add extra space between paragraphs
+      cursorY += 10; // Space after paragraph
+    });
+
+    doc.save('document.pdf');
+  };
+
   return (
-
-    
-
     <>
-
-      
-
       <div className="" style={{ height: "93%", width: "1140px" }}>
         <div
           id="onpostbtns"
@@ -72,7 +105,7 @@ const OpenNote = ({ note, setAllNotes }) => {
               <img src={ClearIcon} alt="Clear all" />
             </a>
           </button>
-          <button className="h-10 w-10">
+          <button className="h-10 w-10" onClick={handleSave}>
             <a>
               <img src={SaveIcon} alt="Save this note" />
             </a>
@@ -80,7 +113,7 @@ const OpenNote = ({ note, setAllNotes }) => {
         </div>
 
         <textarea
-          className="h-full w-full p-10 border-none"
+          className="h-full w-full p-10 border-none resize-none"
           placeholder="Start from here..."
           value={currentNote}
           onChange={handleTextAreaChanges}
